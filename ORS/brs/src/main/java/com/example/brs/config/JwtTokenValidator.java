@@ -46,6 +46,7 @@ public class JwtTokenValidator extends OncePerRequestFilter {
 
             } catch (Exception e) {
                 // Log the exception if needed
+                response.sendError(HttpServletResponse.SC_UNAUTHORIZED, "Invalid token");
                 throw new BadCredentialsException("Invalid token", e);
             }
         }

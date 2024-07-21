@@ -1,0 +1,38 @@
+/* src/components/Banner.css */
+.banner {
+    background-color: rgb(137, 145, 152);
+    background-size: cover;
+    background-position: center;
+    height: 60vh; /* Adjust the height as needed */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #fff;
+    text-align: center;
+    padding: 20px;
+}
+
+.banner-content {
+    max-width: 80%;
+    margin: 0 auto;
+}
+
+.banner-title {
+    font-size: 3rem; /* Adjust size for readability */
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+
+.banner-subtitle {
+    font-size: 1.5rem; /* Slightly smaller than the title */
+    margin-bottom: 20px;
+}
+
+.banner-cta {
+    font-size: 1.25rem;
+    padding: 10px 20px;
+    background-color: #007bff; /* Adjust color to match your theme */
+    color: #fff;
+    text-decoration: none;
+    border-radius: 5px;
+}

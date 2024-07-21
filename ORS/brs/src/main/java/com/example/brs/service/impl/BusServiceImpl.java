@@ -7,6 +7,7 @@ import com.example.brs.repository.BusRepository;
 import com.example.brs.service.BusService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 import java.util.Optional;
@@ -26,23 +27,28 @@ public class BusServiceImpl implements BusService {
         bus.setRoute(createBusRequest.getRoute());
         bus.setCapacity(createBusRequest.getCapacity());
         bus.setCreator(user);
+        if (createBusRequest.getImages() != null && !createBusRequest.getImages().isEmpty()) {
+            bus.setImages(createBusRequest.getImages());
+        }
         return busRepository.save(bus);
     }
 
     @Override
     public Bus updateBus(Long id, CreateBusRequest createBusRequest) throws Exception {
-        if (!busRepository.existsById(id)) {
+        Optional<Bus> existingBusOptional = busRepository.findById(id);
+        if (!existingBusOptional.isPresent()) {
             throw new Exception("Bus not found");
         }
 
-        Bus bus = new Bus();
-        bus.setId(id);
-        bus.setBusNumber(createBusRequest.getBusNumber());
-        bus.setDriverName(createBusRequest.getDriverName());
-        bus.setRoute(createBusRequest.getRoute());
-        bus.setCapacity(createBusRequest.getCapacity());
+        Bus existingBus = existingBusOptional.get();
+        existingBus.setBusNumber(createBusRequest.getBusNumber());
+        existingBus.setDriverName(createBusRequest.getDriverName());
+        existingBus.setRoute(createBusRequest.getRoute());
+        existingBus.setCapacity(createBusRequest.getCapacity());
+        existingBus.setImages(createBusRequest.getImages());
 
-        return busRepository.save(bus);
+        // Do not change the creator field
+        return busRepository.save(existingBus);
     }
 
     @Override

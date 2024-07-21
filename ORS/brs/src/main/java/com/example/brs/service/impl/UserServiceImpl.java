@@ -1,6 +1,7 @@
 package com.example.brs.service.impl;
 
 import com.example.brs.config.JwtProvider;
+import com.example.brs.dto.request.UpdateUserRequest;
 import com.example.brs.modal.ROLE;
 import com.example.brs.modal.User;
 import com.example.brs.repository.UserRepository;
@@ -10,10 +11,12 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
@@ -23,6 +26,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private JwtProvider jwtProvider;
+
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     @Override
     public User saveUser(User user) throws Exception {
@@ -58,5 +64,40 @@ public class UserServiceImpl implements UserService {
         }
         return user;
 
+    }
+
+    @Override
+    public List<User> getAllUsers() throws Exception {
+        return userRepository.findAll();
+    }
+
+
+    @Override
+    public User updateUser(String jwt, UpdateUserRequest updateRequest) throws Exception {
+        String username = jwtProvider.getUsernameFromJwtToken(jwt);
+        User existingUser = userRepository.findByUsername(username).orElse(null);
+        if (existingUser == null) {
+            throw new Exception("User not found");
+        }
+
+        // Update fields based on the request
+        if (updateRequest.getUsername() != null) {
+            existingUser.setUsername(updateRequest.getUsername());
+        }
+        if (updateRequest.getPassword() != null) {
+            existingUser.setPassword(passwordEncoder.encode(updateRequest.getPassword()));
+        }
+
+        // Save the updated user
+        return userRepository.save(existingUser);
+
+    }
+
+    @Override
+    public void deleteUser(Long id) throws Exception {
+        if (!userRepository.existsById(id)) {
+            throw new Exception("User not found");
+        }
+        userRepository.deleteById(id);
     }
 }

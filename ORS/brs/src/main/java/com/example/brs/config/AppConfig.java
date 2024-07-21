@@ -18,6 +18,7 @@ import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 import org.springframework.web.cors.CorsConfiguration;
 import org.springframework.web.cors.CorsConfigurationSource;
+import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 
 
 import java.util.Arrays;
@@ -38,9 +39,9 @@ public class AppConfig {
         http
                 .sessionManagement(management -> management.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers("/api/auth/**").permitAll()
-                        .requestMatchers("/api/bus/add").hasRole("ADMIN") // Allow access to authentication endpoints
-                        .requestMatchers(HttpMethod.GET, "/api/buses/**").permitAll()
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+                        .requestMatchers("/api/**").authenticated()// Allow access to authentication endpoints
+                        .requestMatchers(HttpMethod.GET, "/api/bus/**").permitAll()
                         .anyRequest().permitAll())
                 .addFilterBefore((Filter) jwtTokenValidator, BasicAuthenticationFilter.class)
                 .csrf(csrf -> csrf.disable())
@@ -51,25 +52,27 @@ public class AppConfig {
 
 
 
-    private CorsConfigurationSource corsConfigurationSource() {
-        return  new CorsConfigurationSource() {
-            @Override
-            public CorsConfiguration getCorsConfiguration(HttpServletRequest request) {
+    @Bean
+    public CorsConfigurationSource corsConfigurationSource() {
+        CorsConfiguration configuration = new CorsConfiguration();
+        configuration.setAllowedOrigins(Arrays.asList("http://localhost:5173"));
+        configuration.setAllowedMethods(Arrays.asList(
+                HttpMethod.GET.name(),
+                HttpMethod.POST.name(),
+                HttpMethod.PUT.name(),
+                HttpMethod.DELETE.name(),
+                HttpMethod.OPTIONS.name()
+        ));
+        configuration.setAllowCredentials(true);
+        configuration.setAllowedHeaders(Collections.singletonList("*"));
+        configuration.setExposedHeaders(Arrays.asList("Authorization"));
+        configuration.setMaxAge(3600L);
 
-                CorsConfiguration cfg=new CorsConfiguration();
-                cfg.setAllowedOrigins(Arrays.asList(
-                        "https://localhost:5173/"
-                ));
-                cfg.setAllowedMethods(Collections.singletonList("*"));
-                cfg.setAllowCredentials(true);
-                cfg.setAllowedHeaders(Collections.singletonList("*"));
-                cfg.setExposedHeaders(Arrays.asList("Authorization"));
-                cfg.setMaxAge(3600L);
-                return cfg;
-
-            }
-        };
+        UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+        source.registerCorsConfiguration("/**", configuration);
+        return source;
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {

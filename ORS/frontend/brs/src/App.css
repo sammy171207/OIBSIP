@@ -1,0 +1,326 @@
+/* src/styles/home.css */
+/* src/pages/Home.css */
+.home {
+  
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.home h1 {
+  font-size: 2.5em;
+  color: #333333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.bus-list {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 20px;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1.2em;
+  color: #666666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .home {
+    padding: 10px;
+  }
+
+  .home h1 {
+    font-size: 2em;
+  }
+
+  .bus-list {
+    gap: 10px;
+  }
+}
+
+  
+  /* src/styles/busCard.css */
+  .bus-card {
+    background-color: #ffffff;
+    border-radius: 10px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin: 10px;
+    padding: 20px;
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  
+  .bus-card h3 {
+    margin: 0;
+    font-size: 1.5em;
+    color: #333333;
+  }
+  
+  .bus-card p {
+    margin: 5px 0;
+    font-size: 1em;
+    color: #666666;
+  }
+  
+  .bus-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 12px rgba(0, 0, 0, 0.2);
+  }
+  
+  /* Responsive design */
+  @media (max-width: 768px) {
+    .bus-card {
+      padding: 15px;
+    }
+  
+    .bus-card h3 {
+      font-size: 1.2em;
+    }
+  
+    .bus-card p {
+      font-size: 0.9em;
+    }
+  }
+
+  /* src/pages/Login.css */
+.login-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+}
+
+.login-container h2 {
+  font-size: 2em;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-size: 1em;
+  color: #666666;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+button {
+  padding: 10px;
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #357ab7;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1em;
+  color: #666666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .login-container {
+    padding: 10px;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  button {
+    font-size: 0.9em;
+  }
+}
+
+/* src/pages/Signup.css */
+.signup-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background-color: #f7f7f7;
+}
+
+.signup-container h2 {
+  font-size: 2em;
+  color: #333333;
+  margin-bottom: 20px;
+}
+
+form {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+}
+
+form div {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+label {
+  font-size: 1em;
+  color: #666666;
+}
+
+input {
+  padding: 10px;
+  border: 1px solid #cccccc;
+  border-radius: 5px;
+  font-size: 1em;
+}
+
+button {
+  padding: 10px;
+  background-color: #4a90e2;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+button:hover {
+  background-color: #357ab7;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1em;
+  color: #666666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .signup-container {
+    padding: 10px;
+  }
+
+  form {
+    padding: 20px;
+  }
+
+  button {
+    font-size: 0.9em;
+  }
+}
+
+/* src/pages/MyReservations.css */
+.my-reservations {
+  padding: 20px;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.my-reservations h2 {
+  font-size: 2em;
+  color: #333333;
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+.my-reservations ul {
+  list-style-type: none;
+  padding: 0;
+}
+
+.reservation-item {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+  padding: 20px;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.reservation-item h3 {
+  margin: 0;
+  font-size: 1.5em;
+  color: #333333;
+}
+
+.reservation-item p {
+  margin: 5px 0;
+  font-size: 1em;
+  color: #666666;
+}
+
+.reservation-item button {
+  padding: 10px 20px;
+  background-color: #e74c3c;
+  color: #ffffff;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.reservation-item button:hover {
+  background-color: #c0392b;
+}
+
+.loading,
+.error {
+  text-align: center;
+  font-size: 1em;
+  color: #666666;
+}
+
+/* Responsive design */
+@media (max-width: 768px) {
+  .my-reservations {
+    padding: 10px;
+  }
+
+  .reservation-item {
+    padding: 15px;
+  }
+}
+

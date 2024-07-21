@@ -9,7 +9,7 @@ import java.util.function.Function;
 
 public class JavaUtils {
 
-    private String secret = "mysecret";
+    private String secret = JwtConstant.SECRET;
 
     public String extractUsername(String token) {
         return extractClaim(token, Claims::getSubject);

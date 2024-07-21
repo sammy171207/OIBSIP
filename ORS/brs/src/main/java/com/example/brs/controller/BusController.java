@@ -5,9 +5,12 @@ import com.example.brs.modal.Bus;
 import com.example.brs.modal.User;
 import com.example.brs.service.BusService;
 import com.example.brs.service.UserService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -17,6 +20,7 @@ import java.util.Optional;
 @RequestMapping("/api/bus")
 public class BusController {
 
+    private static final Logger logger = LoggerFactory.getLogger(BusController.class);
 
     @Autowired
     private BusService busService;
@@ -24,6 +28,8 @@ public class BusController {
     @Autowired
     private UserService userService;
 
+
+    @PreAuthorize("hasRole('ADMIN')")
     @PostMapping("/add")
     public ResponseEntity<Bus> addBus(@RequestHeader("Authorization") String jwt, @RequestBody CreateBusRequest createBusRequest) throws Exception {
         User user=userService.findByUserByJwtToken(jwt);
@@ -33,16 +39,19 @@ public class BusController {
 
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @PutMapping("/update/{id}")
     public ResponseEntity<Bus> updateBus(@PathVariable("id") Long id, @RequestBody CreateBusRequest createBusRequest) {
         try {
             Bus updatedBus = busService.updateBus(id, createBusRequest);
             return new ResponseEntity<>(updatedBus, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(null, HttpStatus.NOT_FOUND);
+            logger.error("Error updating bus with ID {}: {}", id, e.getMessage());
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
     }
 
+    @PreAuthorize("hasRole('ADMIN')")
     @DeleteMapping("/delete/{id}")
     public ResponseEntity<Void> deleteBus(@PathVariable("id") Long id) {
         try {

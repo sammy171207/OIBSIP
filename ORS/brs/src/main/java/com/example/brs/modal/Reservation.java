@@ -24,4 +24,10 @@ public class Reservation {
     @Column(nullable = false)
     private Date reservationTime;
 
+    @Column(nullable = false)
+    private int numberOfSeats;
+
+    @Column(nullable = false)
+    private double price;
+
 }
